@@ -1,0 +1,43 @@
+version: "3.7"
+
+volumes:
+  postgres:
+  pgadmin:
+
+services:
+  performance-calculator:
+    image: performance_calculator
+    build:
+        context: .
+        dockerfile: Dockerfile
+    
+  postgres-db:
+    container_name: postgres-db
+    image: "postgres"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123456"
+      PGDATA: "/data/postgres"
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: "dpage/pgadmin4"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "15433:80"
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - "/bin/echo 'postgres:5432:*:postgres:123456' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
+    restart: unless-stopped
