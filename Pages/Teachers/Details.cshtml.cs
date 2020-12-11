@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PerformanceCalculator.Models;
 using PerformanceCalculator.Services;
+using PerformanceCalculator.Specifications;
 
 namespace PerformanceCalculator.Pages.Teachers
 {
     public class DetailsModel : PageModel
     {
-        [BindProperty] 
-        public Teacher Teacher { get; set; }
+        [BindProperty] public Teacher Teacher { get; set; }
 
         private readonly IDbService<Teacher> _service;
 

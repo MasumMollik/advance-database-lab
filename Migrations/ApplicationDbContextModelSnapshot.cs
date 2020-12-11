@@ -37,6 +37,9 @@ namespace PerformanceCalculator.Migrations
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
@@ -47,7 +50,42 @@ namespace PerformanceCalculator.Migrations
 
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("TeacherId");
+
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("PerformanceCalculator.Models.Exam", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal>("Mark")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Exam");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>
@@ -66,6 +104,9 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNo")
                         .HasColumnType("text");
 
                     b.Property<string>("RegistrationNo")
@@ -116,11 +157,36 @@ namespace PerformanceCalculator.Migrations
                     b.HasOne("PerformanceCalculator.Models.Student", null)
                         .WithMany("Courses")
                         .HasForeignKey("StudentId");
+
+                    b.HasOne("PerformanceCalculator.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("PerformanceCalculator.Models.Exam", b =>
+                {
+                    b.HasOne("PerformanceCalculator.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PerformanceCalculator.Models.Student", null)
+                        .WithMany("Exams")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Exams");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,5 +14,6 @@ namespace PerformanceCalculator.DbContexts
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<PerformanceCalculator.Models.Exam> Exam { get; set; }
     }
 }

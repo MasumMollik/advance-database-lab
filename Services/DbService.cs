@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PerformanceCalculator.DbContexts;
 using PerformanceCalculator.Models;
+using PerformanceCalculator.Specifications;
 
 namespace PerformanceCalculator.Services
 {
@@ -49,6 +51,21 @@ namespace PerformanceCalculator.Services
         public async Task<bool> IsExists(Guid id)
         {
             return await _context.Set<T>().AnyAsync(m => m.Id == id);
+        }
+
+        public async Task<T> GetModelWithSpec(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).ToListAsync();
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
     }
 }

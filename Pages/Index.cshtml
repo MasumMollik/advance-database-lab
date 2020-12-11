@@ -3,57 +3,75 @@
 @{
     ViewData["Title"] = "Home";
 }
+<br/>
 
-<h1>Index</h1>
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info"> Teacher List</h2>
+    </div>
+    <div class="col-3">
+        <p>
+            <a class="btn btn-info form-control" asp-page="./Teachers/Create">Create Teacher</a>
+        </p>
+    </div>
+    <div class="col-12 border p-3 mt-3">
+        @if (Model.Teachers.Count() > 0)
+        {
+            
+            <table class="table table-striped border">
+                <thead>
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Teachers[0].FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Teachers[0].LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Teachers[0].Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Teachers[0].PhoneNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Teachers[0].Designation)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Teachers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Designation)
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-page="./Teachers/Edit" asp-route-id="@item.Id">Edit</a> 
+                            <a class="btn btn-info" asp-page="./Teachers/Details" asp-route-id="@item.Id">Details</a> 
+                            <a class="btn btn-danger" asp-page="./Teachers/Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No Teacher Available.</p>
+        }
+    </div>
+</div>
 
-<p>
-    <a asp-page="./Teachers/Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Teachers[0].FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Teachers[0].LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Teachers[0].Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Teachers[0].PhoneNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Teachers[0].Designation)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Teachers) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Designation)
-            </td>
-            <td>
-                <a asp-page="./Teachers/Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Teachers/Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Teachers/Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>

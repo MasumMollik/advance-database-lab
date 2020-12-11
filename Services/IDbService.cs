@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PerformanceCalculator.Models;
+using PerformanceCalculator.Specifications;
 
 namespace PerformanceCalculator.Services
 {
@@ -17,5 +18,9 @@ namespace PerformanceCalculator.Services
         Task DeleteAsync(T model);
 
         Task<bool> IsExists(Guid id);
+
+        Task<T> GetModelWithSpec(ISpecification<T> spec);
+
+        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
     }
 }
