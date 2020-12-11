@@ -10,10 +10,10 @@ namespace PerformanceCalculator.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly UserDbService _service;
+        private readonly TeachersService _service;
         public List<Teacher> Teachers { get; private set; }
 
-        public IndexModel(ILogger<IndexModel> logger, UserDbService service)
+        public IndexModel(ILogger<IndexModel> logger, TeachersService service)
         {
             _logger = logger;
             _service = service;

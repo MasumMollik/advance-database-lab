@@ -6,11 +6,11 @@ using PerformanceCalculator.Models;
 
 namespace PerformanceCalculator.Services
 {
-    public class UserDbService : IDbService<Teacher>
+    public class TeachersService
     {
         private readonly UserDbContext _context;
 
-        public UserDbService(UserDbContext context)
+        public TeachersService(UserDbContext context)
         {
             _context = context;
         }
