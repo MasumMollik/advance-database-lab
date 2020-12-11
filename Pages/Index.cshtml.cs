@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using PerformanceCalculator.DbContexts;
 using PerformanceCalculator.Models;
+using PerformanceCalculator.Services;
+using System.Collections.Generic;
 
 namespace PerformanceCalculator.Pages
 {
@@ -12,19 +10,19 @@ namespace PerformanceCalculator.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly UserDbContext _context;
+        private readonly UserDbService _service;
         public List<Teacher> Teachers { get; private set; }
 
-        public IndexModel(ILogger<IndexModel> logger, UserDbContext context)
+        public IndexModel(ILogger<IndexModel> logger, UserDbService service)
         {
             _logger = logger;
-            _context = context;
+            _service = service;
         }
 
         public void OnGet()
         {
             _logger.LogInformation("Index");
-            Teachers = _context.Teachers.ToList();
+            Teachers = _service.Get();
         }
     }
 }
