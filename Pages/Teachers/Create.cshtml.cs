@@ -8,9 +8,9 @@ namespace PerformanceCalculator.Pages.Teachers
 {
     public class CreateModel : PageModel
     {
-        private readonly TeachersService _service;
+        private readonly IDbService<Teacher> _service;
 
-        public CreateModel(TeachersService service)
+        public CreateModel(IDbService<Teacher> service)
         {
             _service = service;
         }

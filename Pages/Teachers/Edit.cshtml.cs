@@ -14,9 +14,9 @@ namespace PerformanceCalculator.Pages.Teachers
     {
         [BindProperty] public Teacher Teacher { get; set; }
 
-        private readonly TeachersService _service;
+        private readonly IDbService<Teacher> _service;
 
-        public EditModel(TeachersService service)
+        public EditModel(IDbService<Teacher> service)
         {
             _service = service;
         }

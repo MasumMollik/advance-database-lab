@@ -12,11 +12,11 @@ namespace PerformanceCalculator.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly TeachersService _service;
+        private readonly IDbService<Teacher> _service;
 
-        public List<Teacher> Teachers { get; set; }
+        public IReadOnlyList<Teacher> Teachers { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, TeachersService service)
+        public IndexModel(ILogger<IndexModel> logger, IDbService<Teacher> service)
         {
             _logger = logger;
             _service = service;

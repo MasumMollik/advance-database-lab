@@ -9,9 +9,9 @@ namespace PerformanceCalculator.Pages.Teachers
 {
     public class DeleteModel : PageModel
     {
-        private readonly TeachersService _service;
+        private readonly IDbService<Teacher> _service;
 
-        public DeleteModel(TeachersService service)
+        public DeleteModel(IDbService<Teacher> service)
         {
             _service = service;
         }
