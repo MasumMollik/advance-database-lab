@@ -10,7 +10,15 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
-    
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling = true"
+    ports:
+        - "5000:80"
+    depends_on:
+        - postgres-db
+        
   postgres-db:
     container_name: postgres-db
     image: "postgres"
@@ -41,3 +49,5 @@ services:
       - "-c"
       - "/bin/echo 'postgres:5432:*:postgres:123456' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
     restart: unless-stopped
+    depends_on:
+        - postgres-db
