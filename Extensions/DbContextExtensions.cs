@@ -11,8 +11,8 @@ namespace PerformanceCalculator.Extensions
         public static IServiceCollection AddContexts(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<UserDbContext>(p =>
-                p.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(option =>
+                option.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             return services;
         }
     }

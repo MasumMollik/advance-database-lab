@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using PerformanceCalculator.Models;
 using PerformanceCalculator.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PerformanceCalculator.Pages
 {
@@ -11,7 +13,8 @@ namespace PerformanceCalculator.Pages
         private readonly ILogger<IndexModel> _logger;
 
         private readonly TeachersService _service;
-        public List<Teacher> Teachers { get; private set; }
+
+        public List<Teacher> Teachers { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, TeachersService service)
         {
@@ -19,10 +22,10 @@ namespace PerformanceCalculator.Pages
             _service = service;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
             _logger.LogInformation("Index");
-            Teachers = _service.Get();
+            Teachers = await _service.GetAsync();
         }
     }
 }

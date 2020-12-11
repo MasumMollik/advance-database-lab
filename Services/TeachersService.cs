@@ -1,35 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using PerformanceCalculator.DbContexts;
 using PerformanceCalculator.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PerformanceCalculator.Services
 {
-    public class TeachersService
+    public class TeachersService : IDbService<Teacher>
     {
-        private readonly UserDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public TeachersService(UserDbContext context)
+        public TeachersService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Teacher> Get()
+        public async Task<List<Teacher>> GetAsync()
         {
-            return _context.Teachers.ToList();
+            return await _context.Teachers.ToListAsync();
         }
 
-        public Teacher GetById(Guid id)
+        public async Task<Teacher> GetByIdAsync(Guid id)
         {
-            return _context.Teachers.FirstOrDefault(t => t.Id == id);
+            return await _context.Teachers.FirstOrDefaultAsync(teacher => teacher.Id == id);
         }
 
-        public void Create(Teacher teacher)
+        public async Task CreateAsync(Teacher teacher)
         {
-            teacher.Id = Guid.NewGuid();
             _context.Teachers.Add(teacher);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Teacher teacher)
+        {
+            _context.Attach(teacher).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Teacher teacher)
+        {
+            _context.Teachers.Remove(teacher);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsExists(Guid id)
+        {
+            return await _context.Teachers.AnyAsync(teacher => teacher.Id == id);
         }
     }
 }

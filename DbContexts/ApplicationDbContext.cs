@@ -4,10 +4,10 @@ using PerformanceCalculator.Models;
 
 namespace PerformanceCalculator.DbContexts
 {
-    public class UserDbContext : DbContext
+    public class ApplicationDbContext : DbContext
 
     {
-        public UserDbContext([NotNull] DbContextOptions<UserDbContext> options) : base(options)
+        public ApplicationDbContext([NotNull] DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 

@@ -9,7 +9,7 @@ using PerformanceCalculator.DbContexts;
 
 namespace PerformanceCalculator.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201210203946_InitialCreate")]
     partial class InitialCreate
     {
