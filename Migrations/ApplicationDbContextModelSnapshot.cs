@@ -85,7 +85,7 @@ namespace PerformanceCalculator.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Exam");
+                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>

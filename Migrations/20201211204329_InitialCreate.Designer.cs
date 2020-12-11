@@ -10,7 +10,7 @@ using PerformanceCalculator.DbContexts;
 namespace PerformanceCalculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201211154106_InitialCreate")]
+    [Migration("20201211204329_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ namespace PerformanceCalculator.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Exam");
+                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>

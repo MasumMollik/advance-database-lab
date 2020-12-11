@@ -1,67 +1,67 @@
 ﻿@page
-@model PerformanceCalculator.Pages.Courses.IndexModel
+@model PerformanceCalculator.Pages.Exams.IndexModel
 
 @{
-    ViewData["Title"] = "Courses";
+    ViewData["Title"] = "Exam";
 }
 
 <br/>
 
 <div class="container row p-0 m-0">
     <div class="col-9">
-        <h2 class="text-info"> Course List</h2>
+        <h2 class="text-info"> Exam List</h2>
     </div>
     <div class="col-3">
         <p>
-            <a class="btn btn-info form-control" asp-page="./Create">Create Course</a>
+            <a class="btn btn-info form-control" asp-page="./Create">Create Exam</a>
         </p>
     </div>
     <div class="col-12 border p-3 mt-3">
-        @if (Model.Course.Any())
+        @if (Model.Exam.Any())
         {
             <table class="table table-striped border">
                 <thead>
                 <tr class="table-secondary">
                     <th>
-                        @Html.DisplayNameFor(model => model.Course[0].Code)
+                        @Html.DisplayNameFor(model => model.Exam[0].Title)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Course[0].Title)
+                        @Html.DisplayNameFor(model => model.Exam[0].Mark)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Course[0].Credit)
+                        @Html.DisplayNameFor(model => model.Exam[0].Course)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Course[0].Teacher)
+                        @Html.DisplayNameFor(model => model.Exam[0].CreatedAt)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Course[0].CreatedAt)
+                        @Html.DisplayNameFor(model => model.Exam[0].UpdatedAt)
                     </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in Model.Course)
+                @foreach (var item in Model.Exam)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Code)
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Credit)
+                            @Html.DisplayFor(modelItem => item.Mark)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Teacher.FirstName)
+                            @Html.DisplayFor(modelItem => item.Course.Id)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedAt)
                         </td>
                         <td>
-                            <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
-                            <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id">Details</a> 
+                            @Html.DisplayFor(modelItem => item.UpdatedAt)
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id">Details</a>
                             <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
@@ -71,7 +71,7 @@
         }
         else
         {
-            <p>No Teacher Available.</p>
+            <p>No Exams Available.</p>
         }
     </div>
 </div>
