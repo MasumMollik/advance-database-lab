@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -34,6 +35,7 @@ namespace PerformanceCalculator.Pages.Exams
 
             var courses = (await _courseService.GetAsync());
             ViewData["CourseTitle"] = new SelectList(courses, "Id", "Title");
+
             return Page();
         }
 

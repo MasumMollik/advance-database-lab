@@ -1,44 +1,56 @@
 ﻿@page
-@model PerformanceCalculator.Pages.Exams.EditModel
+@model EditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Exam</h4>
-<hr/>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+<br/>
+<h2 class="text-info">Edit Exam Details</h2>
+<br/>
+<div class="border container" style="padding: 30px;">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-3">
                 <label asp-for="Exam.Title" class="control-label"></label>
+            </div>
+            <div class="col-8">
                 <input asp-for="Exam.Title" class="form-control"/>
                 <span asp-validation-for="Exam.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
                 <label asp-for="Exam.TotalMark" class="control-label"></label>
+            </div>
+            <div class="col-8">
                 <input asp-for="Exam.TotalMark" class="form-control"/>
                 <span asp-validation-for="Exam.TotalMark" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
                 <label class="control-label">Course Name</label>
+            </div>
+            <div class="col-8">
                 <select asp-for="Exam.CourseId" class="form-control" asp-items="ViewBag.CourseTitle"></select>
                 <span asp-validation-for="Exam.CourseId" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Exam.Id"/>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <input type="hidden" asp-for="Exam.Id"/>
+                <input type="hidden" asp-for="Exam.TeacherId"/>
+                <input type="submit" value="Save" class="btn btn-primary form-control"/>
             </div>
-        </form>
-    </div>
+            <div class="col-3">
+                <a class="btn btn-success form-control" asp-page="./Index">Back to List</a>
+            </div>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
