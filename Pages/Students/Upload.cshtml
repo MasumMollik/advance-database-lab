@@ -1,0 +1,15 @@
+﻿@page
+@model UploadModel
+
+@{
+    ViewData["Title"] = "Upload File";
+}
+
+<br/>
+<h1>
+    Upload Student From a CSV file
+</h1>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" asp-for="Upload" />
+    <input type="submit" />
+</form>

@@ -34,9 +34,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Course[0].Teacher)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Course[0].CreatedAt)
-                    </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -54,10 +51,8 @@
                             @Html.DisplayFor(modelItem => item.Credit)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Teacher.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                            @Html.DisplayFor(modelItem => item.Teacher.FirstName) 
+                            @Html.DisplayFor(modelItem => item.Teacher.LastName)
                         </td>
                         <td>
                             <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 

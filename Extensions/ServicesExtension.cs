@@ -8,6 +8,7 @@ namespace PerformanceCalculator.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IDbService<>), typeof(DbService<>));
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;
         }

@@ -1,42 +1,43 @@
 ﻿@page
-@model IndexModel
+@model PerformanceCalculator.Pages.Students.IndexModel
+
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Index";
 }
-<br/>
 
 <div class="container row p-0 m-0">
-    <div class="col-9">
-        <h2 class="text-info"> Teacher List</h2>
+    <div class="col-8">
+        <h2 class="text-info"> Student List</h2>
     </div>
-    <div class="col-3">
-        <p>
-            <a class="btn btn-info form-control" asp-page="./Teachers/Create">Create Teacher</a>
+    <div class="col-4">
+        <p class="mx-4">
+            <a class="btn btn-info" asp-page="./Create">Create Student</a>
+            <a class="btn btn-primary" asp-page="./Upload">Upload From CSV</a>
         </p>
     </div>
     <div class="col-12 border p-3 mt-3">
-        @if (Model.Teachers.Any())
+        @if (Model.Student.Any())
         {
             <table class="table table-striped border">
                 <thead>
                 <tr class="table-secondary">
                     <th>
-                       Name
+                        Name
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Teachers[0].Email)
+                        @Html.DisplayNameFor(model => model.Student[0].Email)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Teachers[0].PhoneNo)
+                        @Html.DisplayNameFor(model => model.Student[0].RegistrationNo)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Teachers[0].Designation)
+                        @Html.DisplayNameFor(model => model.Student[0].PhoneNo)
                     </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in Model.Teachers)
+                @foreach (var item in Model.Student)
                 {
                     <tr>
                         <td>
@@ -47,15 +48,15 @@
                             @Html.DisplayFor(modelItem => item.Email)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.RegistrationNo)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.PhoneNo)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Designation)
-                        </td>
-                        <td>
-                            <a class="btn btn-success" asp-page="./Teachers/Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-info" asp-page="./Teachers/Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-danger" asp-page="./Teachers/Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
@@ -64,7 +65,7 @@
         }
         else
         {
-            <p>No Teacher Available.</p>
+            <p>No Student Found.</p>
         }
     </div>
 </div>

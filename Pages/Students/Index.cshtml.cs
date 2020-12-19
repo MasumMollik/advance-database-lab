@@ -5,25 +5,22 @@ using PerformanceCalculator.Models;
 using PerformanceCalculator.Services;
 using PerformanceCalculator.Specifications;
 
-namespace PerformanceCalculator.Pages.Exams
+namespace PerformanceCalculator.Pages.Students
 {
     public class IndexModel : PageModel
     {
-        private readonly IDbService<Exam> _service;
+        private readonly IDbService<Student> _service;
 
-        public IndexModel(IDbService<Exam> service)
+        public IndexModel(IDbService<Student> service)
         {
             _service = service;
         }
 
-
-        public IReadOnlyList<Exam> Exam { get; set; }
+        public IReadOnlyList<Student> Student { get; set; }
 
         public async Task OnGetAsync()
         {
-            var spec = new ExamWithCourseSpecification();
-
-            Exam = await _service.ListAsync(spec);
+            Student = await _service.GetAsync();
         }
     }
 }

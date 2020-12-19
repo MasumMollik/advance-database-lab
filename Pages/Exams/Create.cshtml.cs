@@ -1,32 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using PerformanceCalculator.DbContexts;
 using PerformanceCalculator.Models;
+using PerformanceCalculator.Services;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PerformanceCalculator.Pages.Exams
 {
     public class CreateModel : PageModel
     {
-        private readonly PerformanceCalculator.DbContexts.ApplicationDbContext _context;
+        private readonly IDbService<Exam> _examService;
+        private readonly IDbService<Course> _courseService;
+        private readonly IDbService<Teacher> _teacherService;
 
-        public CreateModel(PerformanceCalculator.DbContexts.ApplicationDbContext context)
+        public CreateModel(IDbService<Course> courseService, IDbService<Exam> examService,
+            IDbService<Teacher> teacherService)
         {
-            _context = context;
+            _examService = examService;
+            _courseService = courseService;
+            _teacherService = teacherService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
+            var courses = await _courseService.GetAsync();
+            var teachers = await _teacherService.GetAsync();
+
+            ViewData["CourseTitle"] = new SelectList(courses, "Id", "Title");
+            ViewData["TeacherName"] =
+                new SelectList(teachers.Select(t => new {Id = t.Id, FullName = $"{t.FirstName} {t.LastName}"}), "Id",
+                    "FullName");
             return Page();
         }
 
-        [BindProperty]
-        public Exam Exam { get; set; }
+        [BindProperty] public Exam Exam { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -36,8 +44,7 @@ namespace PerformanceCalculator.Pages.Exams
                 return Page();
             }
 
-            _context.Exams.Add(Exam);
-            await _context.SaveChangesAsync();
+            await _examService.CreateAsync(Exam);
 
             return RedirectToPage("./Index");
         }

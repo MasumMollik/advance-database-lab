@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PerformanceCalculator.DbContexts;
@@ -12,7 +11,8 @@ namespace PerformanceCalculator.Extensions
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(option =>
-                option.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+                option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+            );
             return services;
         }
     }

@@ -1,43 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PerformanceCalculator.DbContexts;
 using PerformanceCalculator.Models;
 using PerformanceCalculator.Services;
 using PerformanceCalculator.Specifications;
 
-namespace PerformanceCalculator.Pages.Exams
+namespace PerformanceCalculator.Pages.Students
 {
     public class EditModel : PageModel
     {
-        private readonly IDbService<Exam> _examService;
-        private readonly IDbService<Course> _courseService;
+        private readonly IDbService<Student> _service;
 
-        public EditModel(IDbService<Exam> examService, IDbService<Course> courseService)
+        public EditModel(IDbService<Student> service)
         {
-            _examService = examService;
-            _courseService = courseService;
+            _service = service;
         }
 
-        [BindProperty] public Exam Exam { get; set; }
+        [BindProperty] public Student Student { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var spec = new ExamWithCourseSpecification(id);
-            Exam = await _examService.GetModelWithSpec(spec);
-            if (Exam == null)
+            var spec = new StudentWithCourseAndExamSpecification(id);
+            Student = await _service.GetModelWithSpec(spec);
+
+            if (Student == null)
             {
                 return NotFound();
             }
 
-            var courses = (await _courseService.GetAsync());
-            ViewData["CourseTitle"] = new SelectList(courses, "Id", "Title");
             return Page();
         }
 
-        // To protect from over posting attacks, enable the specific properties you want to bind to.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
@@ -48,11 +48,11 @@ namespace PerformanceCalculator.Pages.Exams
 
             try
             {
-                await _examService.UpdateAsync(Exam);
+                await _service.UpdateAsync(Student);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!(await _examService.IsExists(Exam.Id)))
+                if (!(await _service.IsExists(Student.Id)))
                 {
                     return NotFound();
                 }

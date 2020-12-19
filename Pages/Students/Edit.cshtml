@@ -1,0 +1,65 @@
+﻿@page
+@model PerformanceCalculator.Pages.Students.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Student.FirstName" class="control-label"></label>
+                <input asp-for="Student.FirstName" class="form-control" />
+                <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.LastName" class="control-label"></label>
+                <input asp-for="Student.LastName" class="form-control" />
+                <span asp-validation-for="Student.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.Email" class="control-label"></label>
+                <input asp-for="Student.Email" class="form-control" />
+                <span asp-validation-for="Student.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.RegistrationNo" class="control-label"></label>
+                <input asp-for="Student.RegistrationNo" class="form-control" />
+                <span asp-validation-for="Student.RegistrationNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.PhoneNo" class="control-label"></label>
+                <input asp-for="Student.PhoneNo" class="form-control" />
+                <span asp-validation-for="Student.PhoneNo" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Student.Id" />
+            <div class="form-group">
+                <label asp-for="Student.CreatedAt" class="control-label"></label>
+                <input asp-for="Student.CreatedAt" class="form-control" />
+                <span asp-validation-for="Student.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.UpdatedAt" class="control-label"></label>
+                <input asp-for="Student.UpdatedAt" class="form-control" />
+                <span asp-validation-for="Student.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

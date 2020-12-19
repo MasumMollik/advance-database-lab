@@ -23,7 +23,7 @@ namespace PerformanceCalculator.Pages.Courses
 
         public async Task<IActionResult> OnGet()
         {
-            var teachers = (await _teacherService.GetAsync());
+            var teachers = await _teacherService.GetAsync();
             ViewData["TeacherName"] =
                 new SelectList(teachers.Select(t => new {Id = t.Id, FullName = $"{t.FirstName} {t.LastName}"}), "Id",
                     "FullName");

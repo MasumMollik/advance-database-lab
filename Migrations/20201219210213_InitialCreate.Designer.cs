@@ -10,7 +10,7 @@ using PerformanceCalculator.DbContexts;
 namespace PerformanceCalculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201211204329_InitialCreate")]
+    [Migration("20201219210213_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,13 +28,15 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Credit")
-                        .HasColumnType("text");
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uuid");
@@ -43,12 +45,16 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
 
                     b.HasIndex("StudentId");
 
@@ -69,14 +75,24 @@ namespace PerformanceCalculator.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<decimal>("Mark")
-                        .HasColumnType("numeric");
+                    b.Property<decimal>("ObtainedMark")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric")
+                        .HasDefaultValue(0m);
 
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<decimal>("TotalMark")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -85,7 +101,11 @@ namespace PerformanceCalculator.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Exams");
                 });
@@ -100,24 +120,33 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("PhoneNo")
                         .HasColumnType("text");
 
                     b.Property<string>("RegistrationNo")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Students");
                 });
@@ -132,24 +161,32 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Designation")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNo")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Teachers");
                 });
@@ -181,7 +218,15 @@ namespace PerformanceCalculator.Migrations
                         .WithMany("Exams")
                         .HasForeignKey("StudentId");
 
+                    b.HasOne("PerformanceCalculator.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>
