@@ -4,21 +4,7 @@ volumes:
   postgres:
   pgadmin:
 
-services:
-  performance-calculator:
-    image: performance_calculator
-    build:
-        context: .
-        dockerfile: Dockerfile
-    environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:80
-        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling = true"
-    ports:
-        - "5000:80"
-    depends_on:
-        - postgres-db
-        
+services:      
   postgres-db:
     container_name: postgres-db
     image: "postgres"
@@ -28,6 +14,7 @@ services:
       PGDATA: "/data/postgres"
     volumes:
       - postgres:/data/postgres
+      - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -49,5 +36,19 @@ services:
       - "-c"
       - "/bin/echo 'postgres:5432:*:postgres:123456' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
     restart: unless-stopped
+    depends_on:
+        - postgres-db
+
+  performance-calculator:
+    image: performance_calculator
+    build:
+        context: .
+        dockerfile: Dockerfile
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling = true"
+    ports:
+        - "5000:80"
     depends_on:
         - postgres-db
