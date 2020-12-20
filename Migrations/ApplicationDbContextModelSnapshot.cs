@@ -158,10 +158,8 @@ namespace PerformanceCalculator.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<int>("Designation")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()

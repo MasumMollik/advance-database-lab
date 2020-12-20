@@ -10,7 +10,7 @@ using PerformanceCalculator.DbContexts;
 namespace PerformanceCalculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201219210213_InitialCreate")]
+    [Migration("20201219215836_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,10 +160,8 @@ namespace PerformanceCalculator.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<int>("Designation")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()

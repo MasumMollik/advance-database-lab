@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using PerformanceCalculator.Constants;
 
 namespace PerformanceCalculator.Models
 {
@@ -15,8 +16,8 @@ namespace PerformanceCalculator.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
+        
         [Required]
-        [MaxLength(50, ErrorMessage = "Designation must be 50 characters or less"), MinLength(5)]
-        public string Designation { get; set; }
+        public DesignationEnum Designation { get; set; }
     }
 }

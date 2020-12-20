@@ -34,7 +34,7 @@ namespace PerformanceCalculator.Migrations
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     PhoneNo = table.Column<string>(type: "text", nullable: false),
-                    Designation = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Designation = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },

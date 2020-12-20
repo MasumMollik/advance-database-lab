@@ -1,4 +1,5 @@
 ﻿@page
+@using PerformanceCalculator.Constants
 @model CreateModel
 @{
     ViewData["Title"] = "Create Teacher";
@@ -50,7 +51,11 @@
                 <label asp-for="Teacher.Designation" class="control-label"></label>
             </div>
             <div class="col-8">
-                <input asp-for="Teacher.Designation" class="form-control"/>
+                <select asp-for="Teacher.Designation"
+                        class="form-control"
+                        asp-items="Html.GetEnumSelectList<DesignationEnum>()">
+                    <option>Select type ...</option>
+                </select>
                 <span asp-validation-for="Teacher.Designation" class="text-danger"></span>
             </div>
         </div>
