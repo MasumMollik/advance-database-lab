@@ -2,13 +2,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using PerformanceCalculator.Models;
 
 namespace PerformanceCalculator.DbContexts
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
 
     {
         public ApplicationDbContext([NotNull] DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -27,6 +28,7 @@ namespace PerformanceCalculator.DbContexts
             modelBuilder.Entity<Exam>()
                 .Property(e => e.ObtainedMark)
                 .HasDefaultValue(0.00);
+            base.OnModelCreating(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
