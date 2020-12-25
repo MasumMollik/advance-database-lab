@@ -21,3 +21,8 @@ CREATE DATABASE performance_calculator
     * postgres
     * dotnet SDK
 * after installing all of these, On your terminal cd into Application Folder and run `dotnet run` or `dotnet watch run`
+ 
+### Tools
+* Visual Studio 2019
+* Entity Framework
+* git
