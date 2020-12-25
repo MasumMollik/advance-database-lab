@@ -25,3 +25,4 @@ CREATE DATABASE performance_calculator
 ### Tools
 * Visual Studio 2019
 * Entity Framework
+* git
