@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PerformanceCalculator.Models;
 using PerformanceCalculator.Services;
-using PerformanceCalculator.Specifications;
 
 namespace PerformanceCalculator.Pages.Teachers
 {
