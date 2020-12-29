@@ -54,16 +54,19 @@ namespace PerformanceCalculator.Pages.Account
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
+                    
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+                return RedirectToPage("../index");
+
             }
             return Page();
+
+
         }
-
-
     }
 }
  

@@ -50,7 +50,7 @@ namespace PerformanceCalculator.Pages.Account
                 var u          = await userManager.FindByEmailAsync(Input.Email);
 
 
-                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe,false); ;
+                var result = await signInManager.PasswordSignInAsync(u.UserName, Input.Password, Input.RememberMe,false); ;
                 if (result.Succeeded)
                 {
                     return RedirectToPage("../index");
