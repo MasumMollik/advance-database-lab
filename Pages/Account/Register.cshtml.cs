@@ -32,9 +32,9 @@ namespace PerformanceCalculator.Pages.Account
                 return Page();
             }
 
-            var userName = Register.Name.ToLower().Split(" ");
+            var userName = Register.Email.ToLower().Split("@");
 
-            var user = new IdentityUser {UserName = $"{userName[0]}{userName[1]}", Email = Register.Email};
+            var user = new IdentityUser {UserName = $"{userName[0]}", Email = Register.Email};
             var result = await _userManager.CreateAsync(user, Register.Password);
             if (result.Succeeded)
             {

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,33 +23,49 @@ namespace PerformanceCalculator.Pages.Account
         }
 
         [BindProperty] public Login Login { get; set; }
+        public string ReturnUrl { get; set; }
 
-        public IActionResult OnGet()
+        [TempData] public string ErrorMessage { get; set; }
+
+        public void OnGet(string returnUrl = null)
         {
-            return Page();
+            if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                ModelState.AddModelError(string.Empty, ErrorMessage);
+            }
+
+            ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            if (!ModelState.IsValid)
+            returnUrl ??= Url.Content("~/");
+
+            if (ModelState.IsValid)
             {
+                var userName = Login.Email.ToLower().Split("@");
+                var result = await _signInManager.PasswordSignInAsync(userName[0], Login.Password, Login.RememberMe,
+                    true);
+                if (result.Succeeded)
+                {
+                    return Redirect(returnUrl);
+                }
+
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new {ReturnUrl = returnUrl, Login.RememberMe});
+                }
+
+                if (result.IsLockedOut)
+                {
+                    return RedirectToPage("./Lockout");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Login.Email);
-            if (user == null)
-            {
-                return Page();
-            }
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, Login.Password, true);
-
-            if (result.Succeeded)
-            {
-                return RedirectToPage("../Index");
-            }
-
-            return Unauthorized();
+            return Page();
         }
     }
 }
