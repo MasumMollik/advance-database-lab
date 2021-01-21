@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -39,6 +40,8 @@ namespace PerformanceCalculator
                     config.Password.RequireUppercase = true;
                     config.Password.RequireNonAlphanumeric = true;
                     config.Password.RequiredLength = 8;
+                    config.Lockout.MaxFailedAccessAttempts = 3;
+                    config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
