@@ -47,7 +47,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - ASPNETCORE_URLS=http://+:80
-        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling = true"
+        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling=true"
     ports:
         - "5000:80"
     depends_on:

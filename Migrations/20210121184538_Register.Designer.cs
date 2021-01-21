@@ -10,8 +10,8 @@ using PerformanceCalculator.DbContexts;
 namespace PerformanceCalculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201228140657_fixed")]
-    partial class @fixed
+    [Migration("20210121184538_Register")]
+    partial class Register
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,43 +1,27 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PerformanceCalculator.Models.Auth;
 
 namespace PerformanceCalculator.Pages.Account
 {
-    public class loginModel : PageModel
+    public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-        private bool isPersistent;
-        public loginModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public LoginModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
+        [BindProperty] public Login Login { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
-            [Required]
-            /*[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]*/
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-            public bool RememberMe { get; set; }
-        }
         public IActionResult OnGet()
         {
             return Page();
@@ -45,25 +29,25 @@ namespace PerformanceCalculator.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var u          = await userManager.FindByEmailAsync(Input.Email);
-
-
-                var result = await signInManager.PasswordSignInAsync(u.UserName, Input.Password, Input.RememberMe,false); ;
-                if (result.Succeeded)
-                {
-                    return RedirectToPage("../index");
-                }
-                else
-                {
-                    return RedirectToPage("/Account/login");
-                }
-
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
+                return Page();
             }
-            return RedirectToPage("/Account/login");
+
+            var user = await _userManager.FindByEmailAsync(Login.Email);
+            if (user == null)
+            {
+                return Page();
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, Login.Password, true);
+
+            if (result.Succeeded)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            return Unauthorized();
         }
     }
 }

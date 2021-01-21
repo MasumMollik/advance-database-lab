@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PerformanceCalculator.Migrations
 {
-    public partial class @fixed : Migration
+    public partial class Register : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
