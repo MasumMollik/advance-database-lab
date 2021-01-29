@@ -34,6 +34,17 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                     </li>
                 </ul>
+                <div class="d-flex">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="./Account/Login" class="btn btn-outline-success">Login</a>
+                    }
+                    else
+                    {
+                        <a asp-page="~/Account/Logout" class="btn btn-outline-danger">Logout</a>
+                    }
+
+                </div>
             </div>
         </div>
     </nav>

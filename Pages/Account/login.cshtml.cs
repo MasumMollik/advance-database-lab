@@ -67,5 +67,16 @@ namespace PerformanceCalculator.Pages.Account
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostLogoutAsync(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            if (returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
+
+            return Page();
+        }
     }
 }
