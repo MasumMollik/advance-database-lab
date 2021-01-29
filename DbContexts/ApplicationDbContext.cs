@@ -28,6 +28,17 @@ namespace PerformanceCalculator.DbContexts
             modelBuilder.Entity<Exam>()
                 .Property(e => e.ObtainedMark)
                 .HasDefaultValue(0.00);
+            
+            modelBuilder.Entity<Exam>()
+                .HasOne<Teacher>(e => e.Teacher)
+                .WithOne(t => t.Exam)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Teacher)
+                .WithOne(t => t.Course)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(modelBuilder);
         }
 

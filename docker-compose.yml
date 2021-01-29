@@ -1,43 +1,28 @@
 version: "3.7"
 
 volumes:
-  postgres:
-  pgadmin:
+  sqlsystem:
+  sqldata:
+  sqllog:
+  sqlbackup:
 
-services:      
-  postgres-db:
-    container_name: postgres-db
-    image: "postgres"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "123456"
-      PGDATA: "/data/postgres"
-    volumes:
-      - postgres:/data/postgres
-      - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+services:   
+  sql-server-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
-      - "5432:5432"
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin
-    image: "dpage/pgadmin4"
+        - "1433:1433" 
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "15433:80"
-    entrypoint:
-      - "/bin/sh"
-      - "-c"
-      - "/bin/echo 'postgres:5432:*:postgres:123456' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
+        SA_PASSWORD: 7D736b01821884D9C80D
+        ACCEPT_EULA: "Y"
+    volumes: 
+       - sqlsystem:/var/opt/mssql/
+       - sqldata:/var/opt/sqlserver/data
+       - sqllog:/var/opt/sqlserver/log
+       - sqlbackup:/var/opt/sqlserver/backup
+       - ./mssql_init.sql:/docker-entrypoint-initdb.d/mssql_init.sql
     restart: unless-stopped
-    depends_on:
-        - postgres-db
+        
 
   performance-calculator:
     image: performance_calculator
@@ -47,7 +32,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - ASPNETCORE_URLS=http://+:80
-        - "ConnectionStrings:DefaultConnection=Host=postgres-db;Port=5432;Username=postgres;Password=123456;Database=performance_calculator;Pooling=true"
+        - "ConnectionStrings:MSSQLConnection=Server=sql-server-db;Database=performance_calculator;User=sa;Password=7D736b01821884D9C80D;"
     ports:
         - "5000:80"
     depends_on:

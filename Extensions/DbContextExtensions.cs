@@ -11,7 +11,7 @@ namespace PerformanceCalculator.Extensions
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(option =>
-                option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+                option.UseSqlServer(configuration.GetConnectionString("MSSQLConnection"))
             );
             return services;
         }
