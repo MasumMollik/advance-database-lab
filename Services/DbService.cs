@@ -63,6 +63,11 @@ namespace PerformanceCalculator.Services
             return await ApplySpecification(spec).AsSingleQuery().ToListAsync();
         }
 
+        public T GetByStorageProcedure(string procedure, string args)
+        {
+            return _context.Set<T>().FromSqlRaw<T>("{0} {1}", procedure, args).ToList().FirstOrDefault();
+        }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);

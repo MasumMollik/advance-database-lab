@@ -18,9 +18,9 @@ namespace PerformanceCalculator.Pages.Teachers
             _service = service;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        public IActionResult OnGet(Guid id)
         {
-            Teacher = await _service.GetByIdAsync(id);
+            Teacher = _service.GetByStorageProcedure("SpGetTeacherById", id.ToString());
             if (Teacher == null)
             {
                 return NotFound();

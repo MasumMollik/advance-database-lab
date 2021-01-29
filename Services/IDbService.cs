@@ -6,7 +6,7 @@ using PerformanceCalculator.Specifications;
 
 namespace PerformanceCalculator.Services
 {
-    public interface IDbService<T> where T: BaseModel
+    public interface IDbService<T> where T : BaseModel
     {
         Task<IReadOnlyList<T>> GetAsync();
 
@@ -22,5 +22,6 @@ namespace PerformanceCalculator.Services
         Task<T> GetModelWithSpec(ISpecification<T> spec);
 
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        T GetByStorageProcedure(string procedure, string args);
     }
 }

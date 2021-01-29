@@ -4,13 +4,13 @@
     {
         public static string SpGetTeacherById()
         {
-            return @"create procedure GetTeacherById(id text)
-                            language plpgsql
-                            as $$
-                            begin
-                                select * from Teachers
-                                    where Id = id;
-                            end;$$";
+            return @"CREATE PROCEDURE SpGetTeacherById 
+                        @Id uniqueidentifier
+                    as
+                    BEGIN
+	                    Select * from Teachers
+	                        where Id = @Id 
+                    END";
         }
     }
 }
