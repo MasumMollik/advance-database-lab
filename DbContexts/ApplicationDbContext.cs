@@ -38,7 +38,7 @@ namespace PerformanceCalculator.DbContexts
                 .HasOne(c => c.Teacher)
                 .WithOne(t => t.Course)
                 .OnDelete(DeleteBehavior.NoAction);
-
+            
             base.OnModelCreating(modelBuilder);
         }
 
