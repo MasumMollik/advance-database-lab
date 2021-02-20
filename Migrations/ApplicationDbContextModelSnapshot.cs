@@ -215,6 +215,20 @@ namespace PerformanceCalculator.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PerformanceCalculator.Models.Audit.CourseAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuditData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseAudits");
+                });
+
             modelBuilder.Entity("PerformanceCalculator.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")
@@ -248,12 +262,11 @@ namespace PerformanceCalculator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("TeacherId")
-                        .IsUnique();
+                    b.HasIndex("TeacherId");
+
+                    b.HasIndex("Id", "TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -353,6 +366,9 @@ namespace PerformanceCalculator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -379,6 +395,8 @@ namespace PerformanceCalculator.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("Id");
 
@@ -443,9 +461,9 @@ namespace PerformanceCalculator.Migrations
                         .HasForeignKey("StudentId");
 
                     b.HasOne("PerformanceCalculator.Models.Teacher", "Teacher")
-                        .WithOne("Course")
-                        .HasForeignKey("PerformanceCalculator.Models.Course", "TeacherId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Teacher");
@@ -474,6 +492,16 @@ namespace PerformanceCalculator.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("PerformanceCalculator.Models.Teacher", b =>
+                {
+                    b.HasOne("PerformanceCalculator.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("PerformanceCalculator.Models.Student", b =>
                 {
                     b.Navigation("Courses");
@@ -483,8 +511,6 @@ namespace PerformanceCalculator.Migrations
 
             modelBuilder.Entity("PerformanceCalculator.Models.Teacher", b =>
                 {
-                    b.Navigation("Course");
-
                     b.Navigation("Exam");
                 });
 #pragma warning restore 612, 618

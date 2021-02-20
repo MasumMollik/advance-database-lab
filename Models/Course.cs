@@ -18,7 +18,6 @@ namespace PerformanceCalculator.Models
         [Range(1, 4)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Credit { get; set; }
-        [Required]
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
     }

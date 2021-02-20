@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using PerformanceCalculator.Models;
+using PerformanceCalculator.Models.Audit;
 
 namespace PerformanceCalculator.DbContexts
 {
@@ -20,6 +21,7 @@ namespace PerformanceCalculator.DbContexts
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<CourseAudit> CourseAudits { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +37,7 @@ namespace PerformanceCalculator.DbContexts
                 .OnDelete(DeleteBehavior.NoAction);
             
             modelBuilder.Entity<Course>()
-                .HasOne(c => c.Teacher)
+                .HasMany<Teacher>()
                 .WithOne(t => t.Course)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -56,9 +58,11 @@ namespace PerformanceCalculator.DbContexts
             modelBuilder.Entity<Exam>()
                 .HasIndex(e => e.Id);
             modelBuilder.Entity<Course>()
-                .HasIndex(c => c.Id);
+                .HasIndex(c => new {c.Id, c.TeacherId})
+                .IsUnique(false);
             modelBuilder.Entity<Teacher>()
-                .HasIndex(t => t.Id);
+                .HasIndex(t => t.Id)
+                .IsUnique(false);
         }
 
         private void OnBeforeSaving()
