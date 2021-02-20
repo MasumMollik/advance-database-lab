@@ -2,7 +2,7 @@
 @model UploadModel
 
 @{
-    ViewData["Title"] = "Upload File";
+    ViewData["Title"] = "Upload Student File";
 }
 
 <br/>
@@ -10,6 +10,8 @@
     Upload Student From a CSV file
 </h1>
 <form method="post" enctype="multipart/form-data">
-    <input type="file" asp-for="Upload" />
-    <input type="submit" />
+    <div class="input-group mb-3" >
+        <input type="file" asp-for="Upload" class="form-control" />
+        <input class="btn btn-outline-secondary" type="submit" />
+    </div>
 </form>
