@@ -36,4 +36,4 @@ services:
     ports:
         - "5000:80"
     depends_on:
-        - postgres-db
+        - sql-server-db
