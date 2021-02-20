@@ -10,7 +10,7 @@ using PerformanceCalculator.DbContexts;
 namespace PerformanceCalculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210220220015_Initial001")]
+    [Migration("20210220223119_Initial001")]
     partial class Initial001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,20 @@ namespace PerformanceCalculator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CourseAudits");
+                });
+
+            modelBuilder.Entity("PerformanceCalculator.Models.Audit.TeacherAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuditData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeacherAudits");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Models.Course", b =>

@@ -12,7 +12,7 @@ namespace PerformanceCalculator.SQLHelper.Procedures
                 ON Courses.TeacherId = Teachers.Id
             ";
         }
-        public static string CourseTrigger()
+        public static string CourseInsertTrigger()
         {
             return @"CREATE TRIGGER tr_Courses_ForInsert
                     ON Courses
@@ -30,7 +30,7 @@ namespace PerformanceCalculator.SQLHelper.Procedures
         {
             return @"DROP VIEW vWCoursesByTeacher";
         }
-        public static string DropCourseTrigger()
+        public static string DropCourseInsertTrigger()
         {
             return @"DROP TRIGGER tr_Courses_ForInsert";
         }
