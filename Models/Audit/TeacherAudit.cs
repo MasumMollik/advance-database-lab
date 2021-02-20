@@ -1,6 +1,7 @@
 namespace PerformanceCalculator.Models.Audit
 {
-    public class CourseAudit : BaseAudit
+    public class TeacherAudit : BaseAudit
     {
+        
     }
 }

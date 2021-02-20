@@ -229,6 +229,20 @@ namespace PerformanceCalculator.Migrations
                     b.ToTable("CourseAudits");
                 });
 
+            modelBuilder.Entity("PerformanceCalculator.Models.Audit.TeacherAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuditData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeacherAudits");
+                });
+
             modelBuilder.Entity("PerformanceCalculator.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")

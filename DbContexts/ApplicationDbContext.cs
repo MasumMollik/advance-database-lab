@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using PerformanceCalculator.Models;
 using PerformanceCalculator.Models.Audit;
 
@@ -22,6 +21,7 @@ namespace PerformanceCalculator.DbContexts
         public DbSet<Course> Courses { get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<CourseAudit> CourseAudits { get; set; }
+        public DbSet<TeacherAudit> TeacherAudits { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

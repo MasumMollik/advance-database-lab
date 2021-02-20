@@ -78,6 +78,18 @@ namespace PerformanceCalculator.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeacherAudits",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuditData = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherAudits", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -368,6 +380,7 @@ namespace PerformanceCalculator.Migrations
                 column: "CourseId",
                 principalTable: "Courses",
                 principalColumn: "Id");
+
             SQLRegister.RegisterSQL(migrationBuilder);
         }
 
@@ -403,6 +416,9 @@ namespace PerformanceCalculator.Migrations
                 name: "Exams");
 
             migrationBuilder.DropTable(
+                name: "TeacherAudits");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -416,7 +432,7 @@ namespace PerformanceCalculator.Migrations
 
             migrationBuilder.DropTable(
                 name: "Courses");
-                
+            
             SQLRegister.DropSQL(migrationBuilder);
         }
     }
