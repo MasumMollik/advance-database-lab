@@ -12,5 +12,8 @@
 	                        where Id = @Id 
                     END";
         }
+        public static string DropSpGetTeacherById(){
+            return @"DELETE PROCEDURE SpGetTeacherById";
+        }
     }
 }
