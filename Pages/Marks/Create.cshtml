@@ -1,0 +1,59 @@
+@page
+@model PerformanceCalculator.Pages.Marks.CreateModel
+
+@{
+    ViewData["Title"] = "Marks";
+}
+
+<br/>
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info"> Add Mark to @Html.DisplayFor(model => model.Exam.Title) of @Html.DisplayFor(model =>
+            model.Exam.Course.Title)</h2>
+    </div>
+    <div class="col-3">
+        <p>
+            <a class="btn btn-info form-control" asp-page="/">Save All</a>
+        </p>
+    </div>
+    <div class="col-12 p-3 mt-3">
+      @if(Model.Students.Any()){
+        @foreach (var item in Model.Students)
+        {
+            <div class="accordion" id="studentAccordion">
+                <div class="card">
+                    <div class="card-header" id="heading">
+                        <p class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapse" aria-expanded="true" aria-controls="collapse">
+                                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                            </button>
+                        </p>
+                    </div>
+
+                    <div id="collapse" class="collapse show" aria-labelledby="heading"
+                        data-parent="#studentAccordion">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="totalMark">Total Mark</label>
+                                    <input type="email" class="form-control" id="totalMark" value="@Model.Exam.TotalMark" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="obtainedMark">Password</label>
+                                    <input type="number" min="0" max="@Model.Exam.TotalMark" class="form-control" id="obtainedMark" placeholder="Obtained Mark">
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right">Save</button>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        }
+        }
+        else 
+        {
+            <p>No Exams Available.</p>
+        }
+    </div>
+</div>

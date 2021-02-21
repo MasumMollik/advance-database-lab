@@ -21,7 +21,7 @@ namespace PerformanceCalculator.Services
 
         Task<T> GetModelWithSpec(ISpecification<T> spec);
 
-        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        Task<List<T>> ListAsync(ISpecification<T> spec);
         T GetByStorageProcedure(string procedure, string args);
     }
 }
