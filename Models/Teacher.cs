@@ -17,7 +17,8 @@ namespace PerformanceCalculator.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
 
-        [Required] public DesignationEnum Designation { get; set; }
+        [Required] 
+        public DesignationEnum Designation { get; set; }
 
         public Exam Exam { get; set; }
 

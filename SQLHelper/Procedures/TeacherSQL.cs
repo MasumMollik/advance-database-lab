@@ -13,6 +13,7 @@
                     END";
         }
 
+
         public static string SpDeleteTeacherById()
         {
             return @"CREATE PROCEDURE SpDeleteTeacherById 
@@ -22,6 +23,11 @@
 	                    DELETE FROM Teachers
 	                        where Id = @Id 
                     END";
+        }
+
+        public static string DropSpGetTeacherById()
+        {
+            return @"DELETE PROCEDURE SpGetTeacherById";
         }
     }
 }

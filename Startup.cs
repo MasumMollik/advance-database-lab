@@ -28,6 +28,7 @@ namespace PerformanceCalculator
                 o.Conventions.AuthorizeFolder("/Exams");
                 o.Conventions.AuthorizeFolder("/Students");
                 o.Conventions.AuthorizeFolder("/Teachers");
+                o.Conventions.AuthorizeFolder("/Marks");
             });
             services.AddServerSideBlazor();
             services.AddContexts(Configuration);
