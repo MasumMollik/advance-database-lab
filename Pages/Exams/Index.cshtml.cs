@@ -17,12 +17,11 @@ namespace PerformanceCalculator.Pages.Exams
         }
 
 
-        public IReadOnlyList<Exam> Exam { get; set; }
+        public List<Exam> Exam { get; set; }
 
         public async Task OnGetAsync()
         {
-            var spec = new ExamWithCourseSpecification();
-
+            var spec = new ExamWithCourseAndTeacherSpecification();
             Exam = await _service.ListAsync(spec);
         }
     }
