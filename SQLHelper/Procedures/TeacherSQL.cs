@@ -12,5 +12,16 @@
 	                        where Id = @Id 
                     END";
         }
+
+        public static string SpDeleteTeacherById()
+        {
+            return @"CREATE PROCEDURE SpDeleteTeacherById 
+                        @Id uniqueidentifier
+                    as
+                    BEGIN
+	                    DELETE FROM Teachers
+	                        where Id = @Id 
+                    END";
+        }
     }
 }
